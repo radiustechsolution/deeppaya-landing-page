@@ -30,7 +30,6 @@ interface NetworkProvider {
   code: string;
   img: string;
 }
-
 interface DataPlan {
   PRODUCT_CODE: string;
   PRODUCT_ID: string;
@@ -38,7 +37,6 @@ interface DataPlan {
   PRODUCT_AMOUNT: number;
   PRODUCT_SOURCE: number;
 }
-
 interface CableProvider {
   name: string;
   code: string;
@@ -52,13 +50,11 @@ interface CablePackage {
   PRODUCT_DISCOUNT_AMOUNT: string;
   PRODUCT_DISCOUNT: string;
 }
-
 interface ElectricityProvider {
   name: string;
   code: string;
   img: string;
 }
-
 interface EducationProduct {
   PRODUCT_CODE: string;
   PRODUCT_DESCRIPTION: string;
@@ -1003,7 +999,7 @@ const Buy = () => {
   // Initialize Paystack payment
   const initializePayment = usePaystackPayment(paystackConfig);
 
-  // Replace the handleFlutterwavePayment function with this:
+  // Replace the handleFlutterwavePayment function with this
   const handlePaystackPayment = () => {
     initializePayment({
       onSuccess: (response) => {
