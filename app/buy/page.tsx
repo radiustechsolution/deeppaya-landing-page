@@ -980,30 +980,28 @@ const Buy = () => {
 
   const HandleFlutterwavePayment = useFlutterwave(config);
 
-  // const handleFlutterwavePayment = () => {
-  //   HandleFlutterwavePayment({
-  //     callback: (response) => {
-  //       console.log(response);
-  //       if (response.status === "successful") {
-  //         // Handle successful payment (e.g., send to your backend)
-  //         setLoading(true);
-
-  //         console.log(response);
-
-  //         toast.success("Payment successful!");
-  //         console.log("Payment successful:", response);
-  //       } else {
-  //         toast.error("Payment was not successful");
-  //       }
-  //       closePaymentModal();
-  //       onClose();
-  //     },
-  //     onClose: () => {
-  //       toast.info("Payment modal closed");
-  //       onClose();
-  //     },
-  //   });
-  // };
+  const handleFlutterwavePayment = () => {
+    HandleFlutterwavePayment({
+      callback: (response) => {
+        console.log(response);
+        if (response.status === "successful") {
+          // Handle successful payment (e.g., send to your backend)
+          setLoading(true);
+          console.log(response);
+          toast.success("Payment successful!");
+          console.log("Payment successful:", response);
+        } else {
+          toast.error("Payment was not successful");
+        }
+        closePaymentModal();
+        onClose();
+      },
+      onClose: () => {
+        toast.info("Payment modal closed");
+        onClose();
+      },
+    });
+  };
 
   const useFlutterwavePayment = () => {
     const config = {
@@ -1116,68 +1114,68 @@ const Buy = () => {
   //   };
   // };
 
-  const handleFlutterwavePayment = () => {
-    // Load Flutterwave script dynamically
-    const script = document.createElement("script");
-    script.src = "https://checkout.flutterwave.com/v3.js";
-    script.async = true;
+  // const handleFlutterwavePayment = () => {
+  //   // Load Flutterwave script dynamically
+  //   const script = document.createElement("script");
+  //   script.src = "https://checkout.flutterwave.com/v3.js";
+  //   script.async = true;
 
-    script.onload = () => {
-      // Now that the script is loaded, we can use FlutterwaveCheckout
-      const flutterwaveConfig = {
-        public_key:
-          process.env.FLUTTERWAVE_PUBLIC ||
-          "FLWPUBK-ba3e4de6b628ca5e7ae005ede0a9d507-X",
-        tx_ref: transactionDetails["Transaction ID"] || Date.now().toString(),
-        amount: parseFloat(formData.amount) || 0,
-        currency: "NGN",
-        payment_options: "card,ussd,mobilemoney",
-        customer: {
-          email: formData.email,
-          phone_number: formData.phoneNumber || "",
-          name: "Customer",
-        },
-        customizations: {
-          title: `${selectedService} Purchase`,
-          description: `Payment for ${selectedService}`,
-          logo: "https://appapi.deeppaya.com/logo.png",
-        },
-        callback: function (response: any) {
-          console.log(response);
-          if (response.status === "successful") {
-            setLoading(true);
-            toast.success("Payment successful!");
-            console.log("Payment successful:", response);
+  //   script.onload = () => {
+  //     // Now that the script is loaded, we can use FlutterwaveCheckout
+  //     const flutterwaveConfig = {
+  //       public_key:
+  //         process.env.FLUTTERWAVE_PUBLIC ||
+  //         "FLWPUBK-ba3e4de6b628ca5e7ae005ede0a9d507-X",
+  //       tx_ref: transactionDetails["Transaction ID"] || Date.now().toString(),
+  //       amount: parseFloat(formData.amount) || 0,
+  //       currency: "NGN",
+  //       payment_options: "card,ussd,mobilemoney",
+  //       customer: {
+  //         email: formData.email,
+  //         phone_number: formData.phoneNumber || "",
+  //         name: "Customer",
+  //       },
+  //       customizations: {
+  //         title: `${selectedService} Purchase`,
+  //         description: `Payment for ${selectedService}`,
+  //         logo: "https://appapi.deeppaya.com/logo.png",
+  //       },
+  //       callback: function (response: any) {
+  //         console.log(response);
+  //         if (response.status === "successful") {
+  //           setLoading(true);
+  //           toast.success("Payment successful!");
+  //           console.log("Payment successful:", response);
 
-            // You might want to verify the transaction on your backend here
-            verifyTransaction(response.transaction_id);
-          } else {
-            toast.error("Payment was not successful");
-          }
-          onClose();
-        },
-        onclose: function () {
-          toast.info("Payment modal closed");
-          onClose();
-        },
-      };
+  //           // You might want to verify the transaction on your backend here
+  //           verifyTransaction(response.transaction_id);
+  //         } else {
+  //           toast.error("Payment was not successful");
+  //         }
+  //         onClose();
+  //       },
+  //       onclose: function () {
+  //         toast.info("Payment modal closed");
+  //         onClose();
+  //       },
+  //     };
 
-      // @ts-ignore - FlutterwaveCheckout is added to window by the script
-      window.FlutterwaveCheckout(flutterwaveConfig);
-    };
+  //     // @ts-ignore - FlutterwaveCheckout is added to window by the script
+  //     window.FlutterwaveCheckout(flutterwaveConfig);
+  //   };
 
-    script.onerror = () => {
-      toast.error("Failed to load payment processor");
-      onClose();
-    };
+  //   script.onerror = () => {
+  //     toast.error("Failed to load payment processor");
+  //     onClose();
+  //   };
 
-    document.body.appendChild(script);
+  //   document.body.appendChild(script);
 
-    // Cleanup function to remove the script when component unmounts
-    return () => {
-      document.body.removeChild(script);
-    };
-  };
+  //   // Cleanup function to remove the script when component unmounts
+  //   return () => {
+  //     document.body.removeChild(script);
+  //   };
+  // };
 
   const verifyTransaction = async (transactionId: string) => {
     try {
