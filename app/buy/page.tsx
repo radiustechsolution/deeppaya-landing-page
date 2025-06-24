@@ -23,6 +23,7 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { toast } from "react-toastify";
+import { usePaystackPayment } from "react-paystack";
 
 interface NetworkProvider {
   name: string;
@@ -978,6 +979,46 @@ const Buy = () => {
     },
   };
 
+  const paystackConfig = {
+    reference:
+      transactionDetails["Transaction ID"] || new Date().getTime().toString(),
+    email: formData.email,
+    amount: (parseFloat(formData.amount) || 0) * 100, // Paystack uses kobo (multiply by 100)
+    publicKey:
+      process.env.PAYSTACK_PUBLIC_KEY ||
+      "pk_live_8061efbaf404e099826b43d312e75cee3d9efd22",
+    currency: "NGN",
+    channels: ["card", "bank", "ussd", "bank_transfer", "mobile_money"],
+    metadata: {
+      custom_fields: [
+        {
+          display_name: "Service Type",
+          variable_name: "service_type",
+          value: selectedService,
+        },
+      ],
+    },
+  };
+
+  // Initialize Paystack payment
+  const initializePayment = usePaystackPayment(paystackConfig);
+
+  // Replace the handleFlutterwavePayment function with this:
+  const handlePaystackPayment = () => {
+    initializePayment({
+      onSuccess: (response) => {
+        console.log("Payment successful:", response);
+        toast.success("Payment successful!");
+        verifyTransaction(response.reference);
+        onClose();
+      },
+      onClose: () => {
+        toast.info("Payment modal closed");
+        onClose();
+      },
+    });
+  };
+
   const HandleFlutterwavePayment = useFlutterwave(config);
 
   const handleFlutterwavePayment = () => {
@@ -1207,10 +1248,15 @@ const Buy = () => {
 
   return (
     <>
-      <div className="w-full min-h-svh bg-gray-50">
+      <div className="w-full min-h-svh bg-gray-50 mb-20">
         <div className="mx-auto max-w-[75rem] px-4 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 text-center lg:text-left">
+            <h1 className="text-3xl font-bold hidden md:block text-gray-900 text-center lg:text-left">
+              The <small className="text-primary">BEST</small> place to
+              subscribe / Buy <br /> <small className="text-primary">VTU</small>{" "}
+              services.
+            </h1>
+            <h1 className="text-3xl font-bold md:hidden text-gray-900 text-center lg:text-left">
               The <small className="text-primary">BEST</small> place to
               subscribe / Buy <br /> <small className="text-primary">VTU</small>{" "}
               services.
@@ -1336,7 +1382,7 @@ const Buy = () => {
                 <div className="flex flex-col w-full mb-5 text-center gap-2">
                   <Button
                     className="w-full text-white bg-primary border-1 border-borderGray"
-                    onPress={handleFlutterwavePayment}
+                    onPress={handlePaystackPayment}
                   >
                     Confirm Purchase
                   </Button>
