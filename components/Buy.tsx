@@ -327,7 +327,7 @@ const Buy = () => {
                   {servicesData.data.data_plans[formData.network]?.map(
                     (planGroup) =>
                       planGroup.PRODUCT.map((plan) => (
-                        <option key={plan.PRODUCT_ID} value={plan.PRODUCT_CODE}>
+                        <option key={plan.PRODUCT_ID} value={plan.PRODUCT_ID}>
                           {plan.PRODUCT_NAME} - ₦{plan.PRODUCT_AMOUNT}
                         </option>
                       ))
@@ -749,13 +749,23 @@ const Buy = () => {
       case "data":
         details["Phone Number"] = formData.phoneNumber;
         details["Network"] = formData.network;
+
+        // Update formData.amount
+        if (!formData.amount) {
+          const dataBundle = servicesData?.data.data_plans[formData.network]
+            ?.flatMap((group) => group.PRODUCT)
+            .find((plan) => plan.PRODUCT_ID === formData.dataBundle);
+          formData.amount = dataBundle
+            ? dataBundle.PRODUCT_AMOUNT.toString()
+            : "0";
+        }
+
         // Find the selected data bundle name
         const dataBundle = servicesData?.data.data_plans[formData.network]
           ?.flatMap((group) => group.PRODUCT)
-          .find((plan) => plan.PRODUCT_CODE === formData.dataBundle);
-        details["Data Bundle"] = dataBundle
-          ? `${dataBundle.PRODUCT_NAME} - ₦${dataBundle.PRODUCT_AMOUNT}`
-          : "";
+          .find((plan) => plan.PRODUCT_ID === formData.dataBundle);
+        details["Data Bundle"] = dataBundle ? `${dataBundle.PRODUCT_NAME}` : "";
+        details["Amount"] = `₦${formData.amount}`;
         break;
       case "cable":
         details["Provider"] = formData.cableProvider;
@@ -817,9 +827,9 @@ const Buy = () => {
           case "data":
             payload = {
               ...payload,
-              phoneNumber: formData.phoneNumber,
+              phone_number: formData.phoneNumber,
               network: formData.network,
-              dataBundle: formData.dataBundle,
+              plan_code: formData.dataBundle,
             };
             break;
           case "cable":
@@ -856,7 +866,20 @@ const Buy = () => {
 
         setLoading(true);
 
-        const response = await fetch("/api/airtime/resolve", {
+        const url =
+          selectedService === "airtime"
+            ? "airtime"
+            : selectedService === "data"
+              ? "data_bundle"
+              : selectedService === "cable"
+                ? "cable"
+                : selectedService === "electricity"
+                  ? "electricity"
+                  : selectedService === "education"
+                    ? "education"
+                    : "others";
+
+        const response = await fetch(`/api/${url}/resolve`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -925,13 +948,10 @@ const Buy = () => {
     initializePayment({
       onSuccess: (response) => {
         console.log("Payment successful:", response);
-        // buyAirtimeValue(response.reference);
         toast.success(
           "Successful! You will receive a confirmation email shortly."
         );
-
         onClose();
-
         // Redirect to the homepage after payment
         router.push("/");
       },
@@ -940,35 +960,6 @@ const Buy = () => {
         onClose();
       },
     });
-  };
-
-  //
-  const buyAirtimeValue = async (transactionId: string) => {
-    try {
-      const response = await fetch("/api/airtime/buy", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ transactionId }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Verification failed");
-      }
-
-      const result = await response.json();
-      if (result.status === "success") {
-        toast.success("Transaction verified successfully");
-      } else {
-        toast.warning("Transaction verification pending");
-      }
-    } catch (error) {
-      console.error("Verification error:", error);
-      toast.error("Error verifying transaction");
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (

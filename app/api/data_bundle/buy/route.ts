@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { phone_number, amount, email, network } = body;
+    const { phone_number, plan_code, email, network } = body;
 
     const response = await fetch(
-      "https://appapi.deeppaya.com/v1/landing/resolve_airtime",
+      "https://appapi.deeppaya.com/v1/landing/resolve_data",
       {
         method: "POST",
         headers: {
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({
           phone_number,
-          amount,
+          plan_code,
           email,
           network,
         }),
