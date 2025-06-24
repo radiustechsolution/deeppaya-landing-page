@@ -923,7 +923,9 @@ const Buy = () => {
       onSuccess: (response) => {
         console.log("Payment successful:", response);
         // buyAirtimeValue(response.reference);
-        toast.success("Payment successful! Verifying transaction...");
+        toast.success(
+          "Payment successful! You will receive a confirmation email shortly."
+        );
         onClose();
       },
       onClose: () => {
