@@ -959,7 +959,9 @@ const Buy = () => {
   };
 
   const config = {
-    public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC || "YOUR_PUBLIC_KEY",
+    public_key:
+      process.env.FLUTTERWAVE_PUBLIC ||
+      "FLWPUBK-ba3e4de6b628ca5e7ae005ede0a9d507-X",
     tx_ref: transactionDetails["Transaction ID"] || Date.now().toString(),
     amount: parseFloat(formData.amount) || 0,
     currency: "NGN",
