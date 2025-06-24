@@ -958,51 +958,50 @@ const Buy = () => {
     prepareTransactionDetails();
   };
 
-  // const handleFlutterwavePayment = () => {
-  //   const config = {
-  //     public_key:
-  //       process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC || "YOUR_PUBLIC_KEY",
-  //     tx_ref: transactionDetails["Transaction ID"] || Date.now().toString(),
-  //     amount: parseFloat(formData.amount) || 0,
-  //     currency: "NGN",
-  //     payment_options: "card,mobilemoney,ussd",
-  //     customer: {
-  //       email: formData.email,
-  //       phone_number: formData.phoneNumber || "",
-  //       name: "Customer",
-  //     },
-  //     customizations: {
-  //       title: `${selectedService} Purchase`,
-  //       description: `Payment for ${selectedService}`,
-  //       logo: "https://appapi.deeppaya.com/logo.png",
-  //     },
-  //   };
+  const config = {
+    public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC || "YOUR_PUBLIC_KEY",
+    tx_ref: transactionDetails["Transaction ID"] || Date.now().toString(),
+    amount: parseFloat(formData.amount) || 0,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: formData.email,
+      phone_number: formData.phoneNumber || "",
+      name: "Customer",
+    },
+    customizations: {
+      title: `${selectedService} Purchase`,
+      description: `Payment for ${selectedService}`,
+      logo: "https://appapi.deeppaya.com/logo.png",
+    },
+  };
 
-  //   const handleFlutterwavePayment = useFlutterwave(config);
+  const HandleFlutterwavePayment = useFlutterwave(config);
 
-  //   handleFlutterwavePayment({
-  //     callback: (response) => {
-  //       console.log(response);
-  //       if (response.status === "successful") {
-  //         // Handle successful payment (e.g., send to your backend)
-  //         setLoading(true);
+  const handleFlutterwavePayment = () => {
+    HandleFlutterwavePayment({
+      callback: (response) => {
+        console.log(response);
+        if (response.status === "successful") {
+          // Handle successful payment (e.g., send to your backend)
+          setLoading(true);
 
-  //         console.log(response);
+          console.log(response);
 
-  //         toast.success("Payment successful!");
-  //         console.log("Payment successful:", response);
-  //       } else {
-  //         toast.error("Payment was not successful");
-  //       }
-  //       closePaymentModal();
-  //       onClose();
-  //     },
-  //     onClose: () => {
-  //       toast.info("Payment modal closed");
-  //       onClose();
-  //     },
-  //   });
-  // };
+          toast.success("Payment successful!");
+          console.log("Payment successful:", response);
+        } else {
+          toast.error("Payment was not successful");
+        }
+        closePaymentModal();
+        onClose();
+      },
+      onClose: () => {
+        toast.info("Payment modal closed");
+        onClose();
+      },
+    });
+  };
 
   const useFlutterwavePayment = () => {
     const config = {
@@ -1071,7 +1070,7 @@ const Buy = () => {
               <p className="text-gray-600 mt-2 text-center lg:text-left">
                 What are you buying today?
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-4">
                 {services.map((service) => {
                   const IconComponent = service.icon;
                   const isSelected = selectedService === service.id;
@@ -1086,7 +1085,7 @@ const Buy = () => {
                         )
                       }
                       className={`
-                      relative p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-105
+                      relative p-4 sm:p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-105
                       ${
                         isSelected
                           ? `${service.color} border-transparent text-white shadow-lg`
@@ -1185,7 +1184,7 @@ const Buy = () => {
                   <Button
                     className="w-full text-white bg-primary border-1 border-borderGray"
                     onPress={() => {
-                      flutterwavePaymentHandler;
+                      handleFlutterwavePayment();
                     }}
                   >
                     Confirm Purchase
