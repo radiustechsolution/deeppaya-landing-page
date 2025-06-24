@@ -18,7 +18,7 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
-      {/* Features */}
+      {/* Feature */}
       <section className="flex px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20 flex-col md:flex-row gap-6 md:gap-0 items-center justify-between ">
         {HomePageFeatures.map((items) => (
           <div
