@@ -622,8 +622,8 @@ const Buy = () => {
           hasError = true;
         }
 
-        if (Number(formData.amount) < 10) {
-          errors.amount = "Amount cannot be less than ₦50";
+        if (Number(formData.amount) < 100) {
+          errors.amount = "Amount cannot be less than ₦100";
           hasError = true;
         }
         break;
@@ -922,8 +922,8 @@ const Buy = () => {
     initializePayment({
       onSuccess: (response) => {
         console.log("Payment successful:", response);
-        toast.success("Payment successful!");
-        verifyTransaction(response.reference);
+        // buyAirtimeValue(response.reference);
+        toast.success("Payment successful! Verifying transaction...");
         onClose();
       },
       onClose: () => {
@@ -934,9 +934,9 @@ const Buy = () => {
   };
 
   //
-  const verifyTransaction = async (transactionId: string) => {
+  const buyAirtimeValue = async (transactionId: string) => {
     try {
-      const response = await fetch("/api/verify-transaction", {
+      const response = await fetch("/api/airtime/buy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
