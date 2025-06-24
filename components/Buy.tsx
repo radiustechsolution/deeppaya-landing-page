@@ -27,12 +27,15 @@ import {
 } from "@heroui/react";
 import { ApiResponse, CablePackage } from "@/lib/types";
 
+import { useRouter } from "next/navigation";
+
 const Buy = () => {
   const [selectedService, setSelectedService] = useState("airtime");
   const [servicesData, setServicesData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
 
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
@@ -924,9 +927,13 @@ const Buy = () => {
         console.log("Payment successful:", response);
         // buyAirtimeValue(response.reference);
         toast.success(
-          "Payment successful! You will receive a confirmation email shortly."
+          "Successful! You will receive a confirmation email shortly."
         );
+
         onClose();
+
+        // Redirect to the homepage after payment
+        router.push("/");
       },
       onClose: () => {
         toast.info("Payment modal closed");
