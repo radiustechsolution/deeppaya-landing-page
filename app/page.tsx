@@ -424,10 +424,10 @@ export default function Home() {
 
           {/* Right side - Image */}
           <div
-            className={`w-full lg:w-1/2 flex justify-center transition-all duration-1000 ${
-              vtuInView
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 translate-x-10"
+            className={`w-full lg:w-1/2 space-y-4 bg-gray-100 p-6 rounded-lg transition-all duration-1000 hover:shadow-xl ${
+              posInView
+                ? "opacity-100 -translate-x-0"
+                : "opacity-0 -translate-x-10"
             }`}
           >
             <div className="animate-image-float hover:scale-105 transition-transform duration-500">
