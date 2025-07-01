@@ -3,6 +3,7 @@ export const siteConfig = {
   name: "DeepPaya",
   description: "Make Your Payment Faster And Easier",
   supportEmail: "support@deeppaya.com",
+  baseUrl: "https://deeppaya.com",
   officeAdress: "143 Aka Etinan Road, uyo, Uyo, Akwa Ibom, Nigeria",
   adminPhone: "+234 814 131 4105",
   navItems: [

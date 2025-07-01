@@ -5,9 +5,30 @@ import Link from "next/link";
 import Button from "./button";
 import { FiMenu } from "react-icons/fi";
 import { usePathname } from "next/navigation";
+import { isIOS, isAndroid } from "react-device-detect";
 
 export const Navbar = () => {
   const pathName = usePathname();
+
+  const handleDownload = () => {
+    // iOS devices
+    if (isIOS) {
+      window.location.href = "https://apps.apple.com/app/YOUR_APP_ID";
+      // or use the itms-apps:// scheme for better deep linking
+      // window.location.href = 'itms-apps://itunes.apple.com/app/idYOUR_APP_ID';
+    }
+    // Android devices
+    else if (isAndroid) {
+      window.location.href =
+        "https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME";
+      // or use the market:// scheme for better deep linking
+      // window.location.href = 'market://details?id=YOUR_PACKAGE_NAME';
+    }
+    // Fallback for other devices
+    else {
+      // window.location.href = `${siteConfig.baseUrl}/download`; // or show both options
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background/90 backdrop-blur-sm border-b border-default-100">
@@ -48,18 +69,32 @@ export const Navbar = () => {
                 Purchase
               </Button>
             </Link>
-            {/* <Button className="text-white">Sign Up</Button> */}
+
+            <Button
+              onClick={handleDownload}
+              className="text-white download-button"
+            >
+              Download App
+            </Button>
           </div>
 
           {/* Mobile Menu */}
           <div className="flex md:hidden items-center gap-4">
-            {pathName !== "/buy" && (
+            {pathName !== "/buy" ? (
               <Link href={"/buy"}>
                 <button className="font-[700] text-sm whitespace-nowrap">
                   Quick Purchase
                 </button>
               </Link>
+            ) : (
+              <button
+                onClick={handleDownload}
+                className="font-[700] text-sm whitespace-nowrap download-button"
+              >
+                Download App
+              </button>
             )}
+
             <button aria-label="Menu">
               <FiMenu className="text-default-600" size={24} />
             </button>

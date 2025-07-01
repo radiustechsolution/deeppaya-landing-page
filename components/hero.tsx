@@ -1,8 +1,30 @@
+"use client";
 import Image from "next/image";
 import Button from "./button";
 import Link from "next/link";
+import { isIOS, isAndroid } from "react-device-detect";
 
 export const Hero = () => {
+  const handleDownload = () => {
+    // iOS devices
+    if (isIOS) {
+      window.location.href = "https://apps.apple.com/app/YOUR_APP_ID";
+      // or use the itms-apps:// scheme for better deep linking
+      // window.location.href = 'itms-apps://itunes.apple.com/app/idYOUR_APP_ID';
+    }
+    // Android devices
+    else if (isAndroid) {
+      window.location.href =
+        "https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME";
+      // or use the market:// scheme for better deep linking
+      // window.location.href = 'market://details?id=YOUR_PACKAGE_NAME';
+    }
+    // Fallback for other devices
+    else {
+      // window.location.href = `${siteConfig.baseUrl}/download`; // or show both options
+    }
+  };
+
   return (
     <section className="flex flex-col px-4 md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-16 py-12 md:py-16 lg:py-20">
       {/* Content */}
@@ -38,12 +60,17 @@ export const Hero = () => {
         </p>
 
         <div className="flex flex-col md:flex-row gap-3 md:gap-4 w-full sm:w-auto">
-          <Link href={"/buy"}>
-            <Button className="w-full text-primary sm:w-auto bg-transparent border-1 border-borderGray">
+          <Button className="w-full text-primary sm:w-auto bg-transparent border-1 border-borderGray">
+            <Link href={"/buy"} className="">
               Purchase
-            </Button>
-          </Link>
-          <Button className="w-full text-white sm:w-auto">Download App</Button>
+            </Link>
+          </Button>
+          <Button
+            onClick={handleDownload}
+            className="text-white download-button w-full sm:w-auto"
+          >
+            Download App
+          </Button>
         </div>
       </div>
 
