@@ -15,7 +15,6 @@ body::-webkit-scrollbar {
 }
 
 /* Add these animations to your global.css file */
-
 /* Hero Section Animation */
 @keyframes heroFadeIn {
   from {
@@ -65,7 +64,7 @@ body::-webkit-scrollbar {
   opacity: 0;
 }
 
-/* Pulse Animation for Icons */
+/* Enhanced Pulse Animation for Icons */
 @keyframes pulseSlow {
   0%,
   100% {
@@ -73,44 +72,34 @@ body::-webkit-scrollbar {
     opacity: 1;
   }
   50% {
-    transform: scale(1.05);
-    opacity: 0.8;
+    transform: scale(1.1);
+    opacity: 0.9;
   }
 }
 
 .animate-pulse-slow {
-  animation: pulseSlow 3s ease-in-out infinite;
+  animation: pulseSlow 2.5s ease-in-out infinite;
 }
 
-/* Slide in Stagger Animation */
-@keyframes slideInStagger {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.animate-slide-in-stagger {
-  animation: slideInStagger 0.6s ease-out forwards;
-}
-
-/* Icon Bounce Animation */
+/* Enhanced Icon Bounce Animation */
 @keyframes iconBounce {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(2deg);
   }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(-6px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-2px) rotate(-1deg);
   }
 }
 
 .animate-icon-bounce {
-  animation: iconBounce 2s ease-in-out infinite;
+  animation: iconBounce 3s ease-in-out infinite;
 }
 
 /* Check Mark Animation */
@@ -145,29 +134,37 @@ body::-webkit-scrollbar {
   animation: checkItem 0.7s ease-out forwards;
 }
 
-/* Button Float Animation */
+/* Enhanced Button Float Animation */
 @keyframes buttonFloat {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translateY(-5px) scale(1.02);
   }
 }
 
 .animate-button-float {
-  animation: buttonFloat 3s ease-in-out infinite;
+  animation: buttonFloat 4s ease-in-out infinite;
 }
 
-/* Image Float Animation */
+/* Enhanced Image Float Animation - Maintains continuous floating */
 @keyframes imageFloat {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-8px) rotate(0.5deg) scale(1.01);
   }
   50% {
-    transform: translateY(-10px) rotate(1deg);
+    transform: translateY(-12px) rotate(1deg) scale(1.02);
+  }
+  75% {
+    transform: translateY(-6px) rotate(0.3deg) scale(1.01);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
   }
 }
 
@@ -191,39 +188,33 @@ body::-webkit-scrollbar {
   animation: borderExpand 1s ease-out forwards;
 }
 
-/* Feature Card Hover Effects */
+/* Enhanced Feature Card Hover Effects */
 .feature-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .feature-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
 }
 
-/* Section Scroll Animation */
-@keyframes slideInFromLeft {
+/* Section Slide Up Animation - Bottom to Top */
+@keyframes slideUpFromBottom {
   from {
     opacity: 0;
-    transform: translateX(-50px);
+    transform: translateY(60px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
-@keyframes slideInFromRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.animate-slide-up {
+  animation: slideUpFromBottom 0.8s ease-out forwards;
 }
 
+/* Fade In Up Animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -233,14 +224,6 @@ body::-webkit-scrollbar {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.animate-slide-in-left {
-  animation: slideInFromLeft 0.8s ease-out forwards;
-}
-
-.animate-slide-in-right {
-  animation: slideInFromRight 0.8s ease-out forwards;
 }
 
 .animate-fade-in-up {
@@ -253,8 +236,8 @@ body::-webkit-scrollbar {
 }
 
 .smooth-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
 /* Loading Animation for Buttons */
@@ -274,7 +257,7 @@ body::-webkit-scrollbar {
   animation: buttonPress 0.2s ease-in-out;
 }
 
-/* Stagger Animation Delays */
+/* Enhanced Stagger Animation Delays */
 .animate-stagger-1 {
   animation-delay: 0.1s;
 }
@@ -291,6 +274,110 @@ body::-webkit-scrollbar {
   animation-delay: 0.5s;
 }
 
+/* Continuous Background Animation for Cards */
+@keyframes cardFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.animate-card-float {
+  animation: cardFloat 5s ease-in-out infinite;
+}
+
+/* Floating Animation for Image Containers */
+@keyframes containerFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-container-float {
+  animation: containerFloat 4s ease-in-out infinite;
+}
+
+/* Enhanced Image Container Float */
+@keyframes enhancedImageFloat {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  33% {
+    transform: translateY(-8px) rotate(0.5deg);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
+  66% {
+    transform: translateY(-12px) rotate(-0.3deg);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.animate-enhanced-image-float {
+  animation: enhancedImageFloat 7s ease-in-out infinite;
+}
+
+/* Subtle Background Pulse for Sections */
+@keyframes sectionPulse {
+  0%,
+  100% {
+    background-color: rgba(243, 244, 246, 1);
+  }
+  50% {
+    background-color: rgba(243, 244, 246, 0.8);
+  }
+}
+
+.animate-section-pulse {
+  animation: sectionPulse 8s ease-in-out infinite;
+}
+
+/* Icon Rotation on Hover */
+@keyframes iconRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-icon-rotate:hover {
+  animation: iconRotate 0.6s ease-in-out;
+}
+
+/* Gradient Animation for Special Elements */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
 /* Reduce Motion for Accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -299,5 +386,20 @@ body::-webkit-scrollbar {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .animate-image-float {
+    animation-duration: 4s;
+  }
+
+  .animate-button-float {
+    animation-duration: 3s;
+  }
+
+  .animate-card-float {
+    animation-duration: 4s;
   }
 }
