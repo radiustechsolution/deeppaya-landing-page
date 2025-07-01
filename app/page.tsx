@@ -55,6 +55,41 @@ export default function Home() {
       </div>
 
       {/* Feature */}
+      <section
+        ref={featuresRef}
+        className={`flex px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20 flex-col md:flex-row gap-6 md:gap-0 items-center justify-between transition-all duration-1000 ${
+          featuresInView
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-10"
+        }`}
+      >
+        {HomePageFeatures.map((items, index) => (
+          <div
+            key={items.title}
+            className={`flex items-start gap-4 max-w-full md:max-w-[350px] transition-all duration-700 hover:scale-105 hover:shadow-lg hover:bg-gray-50 p-4 rounded-lg ${
+              featuresInView
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+            style={{
+              animationDelay: `${index * 200}ms`,
+              transitionDelay: `${index * 150}ms`,
+            }}
+          >
+            <div className="p-2 mt-[0.35rem] rounded-full bg-primary text-white animate-pulse-slow hover:rotate-12 transition-transform duration-300">
+              <GrTransaction size={14} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-[1rem] sm:text-[1rem] lg:text-[1.3rem] font-bold animate-text-reveal">
+                {items.title}
+              </p>
+              <p className="text-md sm:text-sm lg:text-md text-default-500 animate-text-reveal-delayed">
+                {items.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </section>
     </div>
   );
 }
