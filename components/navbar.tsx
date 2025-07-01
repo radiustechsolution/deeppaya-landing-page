@@ -43,14 +43,12 @@ export const Navbar = () => {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            {pathName !== "/buy" && (
-              <Link href={"/buy"}>
-                <Button className="w-full text-primary sm:w-auto bg-transparent border-1 border-borderGray">
-                  Purchase
-                </Button>
-              </Link>
-            )}
-            <Button className="text-white">Sign Up</Button>
+            <Link href={"/buy"}>
+              <Button className="w-full text-primary sm:w-auto bg-transparent border-1 border-borderGray">
+                Purchase
+              </Button>
+            </Link>
+            {/* <Button className="text-white">Sign Up</Button> */}
           </div>
 
           {/* Mobile Menu */}

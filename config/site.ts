@@ -2,6 +2,9 @@ export type SiteConfig = typeof siteConfig;
 export const siteConfig = {
   name: "DeepPaya",
   description: "Make Your Payment Faster And Easier",
+  supportEmail: "support@deeppaya.com",
+  officeAdress: "143 Aka Etinan Road, uyo, Uyo, Akwa Ibom, Nigeria",
+  adminPhone: "+234 814 131 4105",
   navItems: [
     // {
     //   label: "Home",
@@ -16,12 +19,12 @@ export const siteConfig = {
       href: "/pricing",
     },
     {
-      label: "Features",
-      href: "/features",
+      label: "Contact Us",
+      href: "/contact",
     },
     {
       label: "Privacy & Policy",
-      href: "/privacypolicy",
+      href: "/privacy-policy",
     },
   ],
   navMenuItems: [
@@ -68,5 +71,12 @@ export const siteConfig = {
   siteColors: {
     primary: "#8059fa",
     dark: "#11172b",
+  },
+
+  appapiUrl: "https://appapi.deeppaya.com/v1",
+
+  siteLinks: {
+    privacy: "/privacy-policy",
+    terms: "/terms-conditions",
   },
 };

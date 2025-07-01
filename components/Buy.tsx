@@ -55,6 +55,7 @@ const Buy = () => {
     customerName: "",
     meterNumber: "",
     discoCompany: "",
+    discoCode: "",
     studentId: "",
     institution: "",
     course: "",
@@ -136,7 +137,7 @@ const Buy = () => {
       [e.target.name]: e.target.value,
     });
 
-    console.log(e.target.value);
+    console.log(formData);
   };
 
   const handleServiceClick = (serviceId: string) => {
@@ -153,6 +154,7 @@ const Buy = () => {
       customerName: "",
       meterNumber: "",
       discoCompany: "",
+      discoCode: "",
       studentId: "",
       institution: "",
       course: "",
@@ -507,6 +509,22 @@ const Buy = () => {
             </div>
             <div>
               <p className="block text-sm font-medium text-gray-700 mb-2">
+                Phone Number
+              </p>
+              <div className="relative">
+                <FiPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter phone number"
+                />
+              </div>
+            </div>
+            <div>
+              <p className="block text-sm font-medium text-gray-700 mb-2">
                 Institution
               </p>
               <select
@@ -775,25 +793,31 @@ const Buy = () => {
         ]
           ?.flatMap((group) => group.PRODUCT)
           .find((pkg) => pkg.PACKAGE_ID === formData.dataBundle);
+
         details["Package"] = cablePackage
           ? `${cablePackage.PACKAGE_NAME} - ₦${cablePackage.PACKAGE_AMOUNT}`
           : "";
         details["Smart Card"] = formData.smartCardNumber;
-        break;
-      case "electricity":
-        details["Company"] =
-          servicesData?.data.elecricity.find(
-            (provider) => provider.code === formData.discoCompany
-          )?.name || "";
-        details["Meter Number"] = formData.meterNumber;
-        details["Amount"] = `₦${formData.amount}`;
+
+        // Set the amount from the cable package
+        if (cablePackage) {
+          formData.amount = cablePackage.PACKAGE_AMOUNT.toString();
+          details["Amount"] = `₦${cablePackage.PACKAGE_AMOUNT}`;
+        }
         break;
       case "education":
-        details["Institution"] =
-          servicesData?.data.education.EXAM_TYPE.find(
-            (exam) => exam.PRODUCT_CODE === formData.institution
-          )?.PRODUCT_DESCRIPTION || "";
+        const selectedExam = servicesData?.data.education.EXAM_TYPE.find(
+          (exam) => exam.PRODUCT_CODE === formData.institution
+        );
+
+        details["Institution"] = selectedExam?.PRODUCT_DESCRIPTION || "";
         details["Student ID"] = formData.studentId;
+
+        // Set the amount from the selected exam
+        if (selectedExam) {
+          formData.amount = selectedExam.PRODUCT_AMOUNT.toString();
+          details["Amount"] = `₦${selectedExam.PRODUCT_AMOUNT}`;
+        }
         break;
       case "others":
         details["Service"] = formData.serviceType;
@@ -835,24 +859,26 @@ const Buy = () => {
           case "cable":
             payload = {
               ...payload,
-              cableProvider: formData.cableProvider,
-              package: formData.dataBundle,
-              smartCardNumber: formData.smartCardNumber,
+              provider: formData.cableProvider,
+              package_id: formData.dataBundle,
+              iuc_number: formData.smartCardNumber,
             };
             break;
           case "electricity":
             payload = {
               ...payload,
-              discoCompany: formData.discoCompany,
-              meterNumber: formData.meterNumber,
+              company_code: formData.discoCompany,
+              meter_number: formData.meterNumber,
               amount: formData.amount,
             };
             break;
           case "education":
             payload = {
               ...payload,
-              institution: formData.institution,
-              studentId: formData.studentId,
+              product_code: formData.institution,
+              profile_id: formData.studentId,
+              amount: formData.amount,
+              phone_number: formData.phoneNumber,
             };
             break;
           case "others":
@@ -883,11 +909,13 @@ const Buy = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
           },
           body: JSON.stringify(payload),
         });
 
         if (!response.ok) {
+          console.error("Failed to resolve transaction:", response);
           setLoading(false);
           throw new Error("Failed to resolve transaction");
         }
@@ -896,6 +924,8 @@ const Buy = () => {
         // Optionally, update details["Transaction ID"] with result.transactionId if returned
         if (result.data.ref) {
           details["Transaction ID"] = result.data.ref;
+          if (selectedService == "electricity")
+            details["Name"] = result.data.customer_name;
         }
 
         onOpen();
@@ -945,6 +975,7 @@ const Buy = () => {
 
   // Replace the handleFlutterwavePayment function with this
   const handlePaystackPayment = () => {
+    console.log(formData);
     initializePayment({
       onSuccess: (response) => {
         console.log("Payment successful:", response);

@@ -1,4 +1,5 @@
 // app/api/services/route.ts
+import { siteConfig } from "@/config/site";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -7,7 +8,7 @@ export async function POST(request: Request) {
     const { phone_number, amount, email, network } = body;
 
     const response = await fetch(
-      "https://appapi.deeppaya.com/v1/landing/resolve_airtime",
+      `${siteConfig.appapiUrl}/landing/resolve_airtime`,
       {
         method: "POST",
         headers: {

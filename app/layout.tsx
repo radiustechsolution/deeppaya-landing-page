@@ -109,7 +109,7 @@ export default function RootLayout({
                     </div>
                   </Link>
 
-                  <div className="flex items-center space-x-5">
+                  {/* <div className="flex items-center space-x-5">
                     {siteConfig.navItems.map((item) => (
                       <Link
                         key={item.label}
@@ -119,7 +119,7 @@ export default function RootLayout({
                         {item.label}
                       </Link>
                     ))}
-                  </div>
+                  </div> */}
 
                   {/* Links */}
                   <div className="flex items-center space-x-4">
@@ -189,9 +189,19 @@ export default function RootLayout({
                     2025 {`${siteConfig.name}. All right reserved.`}
                   </p>
                   <ul className="text-[#96a6d0] flex gap-2 flex-col sm:flex-row text-[13px]">
-                    <li className="underline">Privacy Policy</li>
-                    <li className="underline">Terms of Service</li>
-                    <li className="underline">Cookie settings</li>
+                    <Link
+                      href={siteConfig.siteLinks.privacy}
+                      className="underline"
+                    >
+                      Privacy Policy
+                    </Link>
+                    <Link
+                      href={siteConfig.siteLinks.terms}
+                      className="underline"
+                    >
+                      Terms of Service
+                    </Link>
+                    {/* <li className="underline">Cookie settings</li> */}
                   </ul>
                 </div>
               </div>

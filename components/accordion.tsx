@@ -3,6 +3,7 @@ import React from "react";
 import { IoMdAdd } from "react-icons/io";
 import Button from "./button";
 import { Accordion, AccordionItem } from "@heroui/react";
+import Link from "next/link";
 
 export const AccordionComp = () => {
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([""]));
@@ -108,9 +109,11 @@ export const AccordionComp = () => {
           ))}
         </div>
       </div>
-      <Button className="w-[70%] text-white sm:w-auto">
-        Contact us {"->"}
-      </Button>
+      <Link className="" href={"/contact"}>
+        <Button className="w-[70%] text-white sm:w-auto">
+          Contact us {"->"}
+        </Button>
+      </Link>
     </section>
   );
 };

@@ -1,16 +1,14 @@
 // app/api/services/route.ts
+import { siteConfig } from "@/config/site";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const response = await fetch(
-      "https://appapi.deeppaya.com/v1/landing/services",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${siteConfig.appapiUrl}/landing/services`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       throw new Error("Failed to fetch services");
