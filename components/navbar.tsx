@@ -6,32 +6,32 @@ import Button from "./button";
 import { FiMenu } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import { isIOS, isAndroid } from "react-device-detect";
+import { SideNavRef } from "./sidenav";
 
-export const Navbar = () => {
+export const Navbar = ({
+  sideNavRef,
+}: {
+  sideNavRef: React.RefObject<SideNavRef>;
+}) => {
   const pathName = usePathname();
 
   const handleDownload = () => {
-    // iOS devices
     if (isIOS) {
       window.location.href = "https://apps.apple.com/app/YOUR_APP_ID";
-      // or use the itms-apps:// scheme for better deep linking
-      // window.location.href = 'itms-apps://itunes.apple.com/app/idYOUR_APP_ID';
-    }
-    // Android devices
-    else if (isAndroid) {
+    } else if (isAndroid) {
       window.location.href =
         "https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME";
-      // or use the market:// scheme for better deep linking
-      // window.location.href = 'market://details?id=YOUR_PACKAGE_NAME';
-    }
-    // Fallback for other devices
-    else {
-      // window.location.href = `${siteConfig.baseUrl}/download`; // or show both options
+    } else {
+      // window.location.href = `${siteConfig.baseUrl}/download`;
     }
   };
 
+  const handleMenuClick = () => {
+    sideNavRef.current?.openNav();
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/90 backdrop-blur-sm border-b border-default-100">
+    <header className="sticky top-0 z-40 w-full bg-background/90 backdrop-blur-sm border-b border-default-100">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-[90rem]">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo and Navigation */}
@@ -95,7 +95,7 @@ export const Navbar = () => {
               </button>
             )}
 
-            <button aria-label="Menu">
+            <button onClick={handleMenuClick} aria-label="Menu">
               <FiMenu className="text-default-600" size={24} />
             </button>
           </div>

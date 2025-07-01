@@ -1,256 +1,281 @@
 "use client";
-import React, { useState } from "react";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  CheckCircle,
-  Clock,
-  Users,
-} from "lucide-react";
-import { siteConfig } from "@/config/site";
 
-export default function ContactPage() {
+import { useState } from "react";
+import { Mail, Phone, MapPin, Send, Clock, MessageCircle } from "lucide-react";
+
+export default function ContactUs() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [focusedField, setFocusedField] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState("");
 
   const handleInputChange = (e: any) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = () => {
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 3000);
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.subject ||
+      !formData.message
+    ) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus("");
+
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitStatus("success");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+
+      // Clear success message after 5 seconds
+      setTimeout(() => setSubmitStatus(""), 5000);
+    }, 2000);
   };
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-20 w-96 h-96 rounded-full border-2 border-primary"></div>
-        <div className="absolute top-40 right-32 w-64 h-64 rounded-full border border-primary"></div>
-        <div className="absolute bottom-20 left-1/3 w-80 h-80 rounded-full border-2 border-primary"></div>
+    <div className="min-h-screen bg-white">
+      {/* Header Section */}
+      <div className="bg-primary text-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4">
+              Get in Touch
+            </h1>
+            <p className="text-md sm:text-xl text-white opacity-80 max-w-2xl mx-auto">
+              We'd love to hear from you. Send us a message and we'll respond as
+              soon as possible.
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-16">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 tracking-tight">
-            Get In
-            <span
-              className="text-primary"
-              style={{ color: siteConfig.siteColors.primary }}
-            >
-              {" "}
-              Touch
-            </span>
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Contact us using the information provided below. We&apos;re here to
-            help and will respond within 24 hours.
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div className="space-y-8">
-            <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200 hover:shadow-lg transition-all duration-300">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">
-                Let&apos;s Connect
+            <div>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+                Let's Start a Conversation
               </h2>
+              <p className="text-sm sm:text-lg text-gray-600 leading-relaxed">
+                Whether you have questions about our services, need support, or
+                want to explore partnership opportunities, our team is here to
+                help. Reach out to us through any of the channels below.
+              </p>
+            </div>
 
-              <div className="space-y-6">
-                <div className="flex items-center space-x-4 group">
-                  <div
-                    className="p-3 rounded-xl group-hover:scale-110 transition-transform duration-300"
-                    style={{ backgroundColor: siteConfig.siteColors.primary }}
-                  >
+            {/* Contact Cards */}
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
                     <Mail className="w-6 h-6 text-white" />
                   </div>
-                  <div>
-                    <p className="text-gray-500 text-sm">Email us at</p>
-                    <p className="text-gray-900 text-lg font-medium">
-                      {siteConfig.supportEmail}
-                    </p>
-                  </div>
                 </div>
-
-                <div className="flex items-center space-x-4 group">
-                  <div
-                    className="p-3 rounded-xl group-hover:scale-110 transition-transform duration-300"
-                    style={{ backgroundColor: siteConfig.siteColors.primary }}
+                <div>
+                  <h3 className="text-md sm:text-lg font-semibold text-gray-900 mb-1">
+                    Email Us
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-2">
+                    Send us an email and we'll get back to you
+                  </p>
+                  <a
+                    href="mailto:hello@yourcompany.com"
+                    className="text-primary hover:text-primary text-sm font-medium"
                   >
+                    hello@yourcompany.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
                     <Phone className="w-6 h-6 text-white" />
                   </div>
-                  <div>
-                    <p className="text-gray-500 text-sm">Call us at</p>
-                    <p className="text-gray-900 text-lg font-medium">
-                      {siteConfig.adminPhone}
-                    </p>
-                  </div>
                 </div>
-
-                <div className="flex items-center space-x-4 group">
-                  <div
-                    className="p-3 rounded-xl group-hover:scale-110 transition-transform duration-300"
-                    style={{ backgroundColor: siteConfig.siteColors.primary }}
+                <div>
+                  <h3 className="text-md sm:text-lg  font-semibold text-gray-900 mb-1">
+                    Call Us
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-2">
+                    Mon-Fri from 8am to 5pm
+                  </p>
+                  <a
+                    href="tel:+1-555-123-4567"
+                    className="text-primary hover:text-primary text-sm font-medium"
                   >
+                    +1 (555) 123-4567
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
-                  <div>
-                    <p className="text-gray-500 text-sm">Visit our office</p>
-                    <p className="text-gray-900 text-lg font-medium">
-                      {siteConfig.officeAdress}
-                    </p>
-                  </div>
+                </div>
+                <div>
+                  <h3 className="text-md sm:text-lg  font-semibold text-gray-900 mb-1">
+                    Visit Us
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    123 Business Avenue
+                    <br />
+                    Suite 100
+                    <br />
+                    New York, NY 10001
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Stats Section */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-md transition-all duration-300 text-center">
-                <Clock
-                  className="w-8 h-8 mx-auto mb-2"
-                  style={{ color: siteConfig.siteColors.primary }}
-                />
-                <p className="text-2xl font-bold text-gray-900">24h</p>
-                <p className="text-gray-500 text-sm">Response Time</p>
+            {/* Business Hours */}
+            {/* <div className="bg-primary border border-blue-200 rounded-lg p-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <Clock className="w-6 h-6 text-primary" />
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Business Hours
+                </h3>
               </div>
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-md transition-all duration-300 text-center">
-                <Users
-                  className="w-8 h-8 mx-auto mb-2"
-                  style={{ color: siteConfig.siteColors.primary }}
-                />
-                <p className="text-2xl font-bold text-gray-900">300+</p>
-                <p className="text-gray-500 text-sm">Happy Clients</p>
+              <div className="space-y-2 text-gray-600">
+                <div className="flex justify-between">
+                  <span>Monday - Friday</span>
+                  <span>8:00 AM - 5:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Saturday</span>
+                  <span>9:00 AM - 2:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Sunday</span>
+                  <span>Closed</span>
+                </div>
               </div>
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:shadow-md transition-all duration-300 text-center">
-                <CheckCircle
-                  className="w-8 h-8 mx-auto mb-2"
-                  style={{ color: siteConfig.siteColors.primary }}
-                />
-                <p className="text-2xl font-bold text-gray-900">99%</p>
-                <p className="text-gray-500 text-sm">Success Rate</p>
-              </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Contact Form */}
-          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200 shadow-sm">
+          <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-8">
+            <div className="flex items-center space-x-3 mb-6">
+              <MessageCircle className="w-6 h-6 text-primary" />
+              <h3 className="text-2xl font-bold text-gray-900">
+                Send us a Message
+              </h3>
+            </div>
+
+            {submitStatus === "success" && (
+              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-green-800 font-medium">
+                  Thank you for your message! We'll get back to you soon.
+                </p>
+              </div>
+            )}
+
             <div className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="relative">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Full Name *
+                  </label>
                   <input
                     type="text"
+                    id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    onFocus={() => setFocusedField("name")}
-                    onBlur={() => setFocusedField("")}
-                    className="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-900 transition-all duration-300"
-                    placeholder="Your Name"
-                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                    placeholder="John Doe"
                   />
-                  {focusedField === "name" && (
-                    <div
-                      className="absolute -top-2 left-3 text-white text-xs px-2 py-1 rounded animate-fadeIn"
-                      style={{ backgroundColor: siteConfig.siteColors.primary }}
-                    >
-                      Full Name
-                    </div>
-                  )}
                 </div>
-
-                <div className="relative">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Email Address *
+                  </label>
                   <input
                     type="email"
+                    id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    onFocus={() => setFocusedField("email")}
-                    onBlur={() => setFocusedField("")}
-                    className="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-900 transition-all duration-300"
-                    placeholder="Your Email"
-                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                    placeholder="john@example.com"
                   />
-                  {focusedField === "email" && (
-                    <div
-                      className="absolute -top-2 left-3 text-white text-xs px-2 py-1 rounded animate-fadeIn"
-                      style={{ backgroundColor: siteConfig.siteColors.primary }}
-                    >
-                      Email Address
-                    </div>
-                  )}
                 </div>
               </div>
 
-              <div className="relative">
+              <div>
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Subject *
+                </label>
                 <input
                   type="text"
+                  id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  onFocus={() => setFocusedField("subject")}
-                  onBlur={() => setFocusedField("")}
-                  className="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-900 transition-all duration-300"
-                  placeholder="Subject"
-                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                  placeholder="How can we help you?"
                 />
-                {focusedField === "subject" && (
-                  <div
-                    className="absolute -top-2 left-3 text-white text-xs px-2 py-1 rounded animate-fadeIn"
-                    style={{ backgroundColor: siteConfig.siteColors.primary }}
-                  >
-                    Message Subject
-                  </div>
-                )}
               </div>
 
-              <div className="relative">
+              <div>
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Message *
+                </label>
                 <textarea
+                  id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  onFocus={() => setFocusedField("message")}
-                  onBlur={() => setFocusedField("")}
                   rows={6}
-                  className="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-gray-900 transition-all duration-300 resize-none"
-                  placeholder="Tell us about your project..."
-                  required
-                ></textarea>
-                {focusedField === "message" && (
-                  <div
-                    className="absolute -top-2 left-3 text-white text-xs px-2 py-1 rounded animate-fadeIn"
-                    style={{ backgroundColor: siteConfig.siteColors.primary }}
-                  >
-                    Your Message
-                  </div>
-                )}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors resize-none"
+                  placeholder="Tell us more about your inquiry..."
+                />
               </div>
 
               <button
-                type="button"
                 onClick={handleSubmit}
-                disabled={isSubmitted}
-                className="w-full text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-                style={{ backgroundColor: siteConfig.siteColors.primary }}
+                disabled={
+                  isSubmitting ||
+                  !formData.name ||
+                  !formData.email ||
+                  !formData.subject ||
+                  !formData.message
+                }
+                className="w-full bg-primary hover:bg-primary disabled:bg-primary text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center space-x-2"
               >
-                {isSubmitted ? (
+                {isSubmitting ? (
                   <>
-                    <CheckCircle className="w-5 h-5" />
-                    <span>Message Sent!</span>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Sending...</span>
                   </>
                 ) : (
                   <>
@@ -261,37 +286,68 @@ export default function ContactPage() {
               </button>
             </div>
 
-            {isSubmitted && (
-              <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-xl text-green-700 text-center animate-fadeIn">
-                Thanks for reaching out! We&apos;ll get back to you within 24
-                hours.
-              </div>
-            )}
+            <p className="text-sm text-gray-500 mt-4 text-center">
+              We typically respond within 24 hours during business days.
+            </p>
           </div>
         </div>
       </div>
 
-      {/* <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+      {/* FAQ Section */}
+      <div className="bg-gray-50 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-lg text-gray-600">
+              Quick answers to common questions you might have.
+            </p>
+          </div>
 
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out;
-        }
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                How quickly do you respond?
+              </h3>
+              <p className="text-gray-600">
+                We aim to respond to all inquiries within 24 hours during
+                business days. For urgent matters, please call us directly.
+              </p>
+            </div>
 
-        input:focus,
-        textarea:focus {
-          border-color:siteConfig.siteColors.primary!important;
-        }
-      `}</style> */}
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                Do you offer phone support?
+              </h3>
+              <p className="text-gray-600">
+                Yes! Our phone support is available Monday through Friday from
+                8am to 5pm EST. Call us at +1 (555) 123-4567.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                Can I schedule a meeting?
+              </h3>
+              <p className="text-gray-600">
+                Absolutely! Mention your preferred time in your message, and
+                we'll coordinate a meeting that works for both parties.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                Where are you located?
+              </h3>
+              <p className="text-gray-600">
+                Our main office is located at 123 Business Avenue, Suite 100,
+                New York, NY 10001. Visitors are welcome by appointment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
