@@ -5,6 +5,7 @@ import Link from "next/link";
 import { isIOS, isAndroid } from "react-device-detect";
 
 export const Hero = () => {
+  // Handle Download
   const handleDownload = () => {
     // iOS devices
     if (isIOS) {
