@@ -124,6 +124,7 @@ const SideNav = forwardRef<SideNavRef>((props, ref) => {
       {/* Overlay */}
       {isOpen && (
         <div
+          role="presentation"
           className="fixed flex flex-col md:hidden inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300"
           onClick={closeNav}
         />
@@ -192,6 +193,7 @@ const SideNav = forwardRef<SideNavRef>((props, ref) => {
               <div key={item.label}>
                 {/* Main Nav Item */}
                 <div
+                  role="presentation"
                   className={`group flex items-center justify-between px-3 py-3 text-sm font-medium rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer ${
                     item.subItems ? "hover:shadow-sm" : ""
                   }`}

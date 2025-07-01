@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Mail, Phone, MapPin, Send, Clock, MessageCircle } from "lucide-react";
+import { siteConfig } from "@/config/site";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -55,8 +56,8 @@ export default function ContactUs() {
               Get in Touch
             </h1>
             <p className="text-md sm:text-xl text-white opacity-80 max-w-2xl mx-auto">
-              We'd love to hear from you. Send us a message and we'll respond as
-              soon as possible.
+              We&apos;d love to hear from you. Send us a message and we&apos;ll
+              respond as soon as possible.
             </p>
           </div>
         </div>
@@ -69,7 +70,7 @@ export default function ContactUs() {
           <div className="space-y-8">
             <div>
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-                Let's Start a Conversation
+                Let&apos;s Start a Conversation
               </h2>
               <p className="text-sm sm:text-lg text-gray-600 leading-relaxed">
                 Whether you have questions about our services, need support, or
@@ -91,13 +92,13 @@ export default function ContactUs() {
                     Email Us
                   </h3>
                   <p className="text-gray-600 text-sm mb-2">
-                    Send us an email and we'll get back to you
+                    Send us an email and we&apos;ll get back to you
                   </p>
                   <a
-                    href="mailto:hello@yourcompany.com"
+                    href={`mailto:${siteConfig.supportEmail}`}
                     className="text-primary hover:text-primary text-sm font-medium"
                   >
-                    hello@yourcompany.com
+                    {siteConfig.supportEmail}
                   </a>
                 </div>
               </div>
@@ -113,13 +114,13 @@ export default function ContactUs() {
                     Call Us
                   </h3>
                   <p className="text-gray-600 text-sm mb-2">
-                    Mon-Fri from 8am to 5pm
+                    Mon-Sat from 8am to 5pm
                   </p>
                   <a
                     href="tel:+1-555-123-4567"
                     className="text-primary hover:text-primary text-sm font-medium"
                   >
-                    +1 (555) 123-4567
+                    {siteConfig.adminPhone}
                   </a>
                 </div>
               </div>
@@ -182,7 +183,7 @@ export default function ContactUs() {
             {submitStatus === "success" && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                 <p className="text-green-800 font-medium">
-                  Thank you for your message! We'll get back to you soon.
+                  Thank you for your message! We&apos;ll get back to you soon.
                 </p>
               </div>
             )}
@@ -332,7 +333,7 @@ export default function ContactUs() {
               </h3>
               <p className="text-gray-600">
                 Absolutely! Mention your preferred time in your message, and
-                we'll coordinate a meeting that works for both parties.
+                we&apos;ll coordinate a meeting that works for both parties.
               </p>
             </div>
 

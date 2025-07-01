@@ -287,7 +287,7 @@ export default function Home() {
           <div className="w-full lg:w-1/2 space-y-4 bg-gray-100 p-6 rounded-lg animate-image-float hover:shadow-xl transition-shadow duration-300">
             <div className="animate-image-float hover:scale-105 transition-transform duration-500">
               <Image
-                src="/pos-agent.jpeg"
+                src="/airtime.png"
                 alt="Become a POS agent"
                 width={500}
                 height={350}
@@ -336,7 +336,7 @@ export default function Home() {
             </div>
 
             <Link
-              href={"/learn-more"}
+              href={"/pos"}
               className="w-[70%] hidden md:flex sm:w-auto animate-button-float"
             >
               <Button className="text-white hover:scale-105 hover:shadow-lg transition-all duration-300">
@@ -345,7 +345,7 @@ export default function Home() {
             </Link>
           </div>
           <div>
-            <Link href={"/learn-more"} className="w-[70%] md:hidden sm:w-auto">
+            <Link href={"/pos"} className="w-[70%] md:hidden sm:w-auto">
               <Button className="text-white hover:scale-105 hover:shadow-lg transition-all duration-300">
                 Register here
               </Button>
