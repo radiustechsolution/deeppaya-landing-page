@@ -3,8 +3,11 @@ import Image from "next/image";
 import Button from "./button";
 import Link from "next/link";
 import { isIOS, isAndroid } from "react-device-detect";
+import { useRouter } from "next/navigation";
 
 export const Hero = () => {
+  const router = useRouter();
+
   // Handle Download
   const handleDownload = () => {
     // iOS devices
@@ -61,10 +64,13 @@ export const Hero = () => {
         </p>
 
         <div className="flex flex-col md:flex-row gap-3 md:gap-4 w-full sm:w-auto">
-          <Button className="w-full text-primary sm:w-auto bg-transparent border-1 border-borderGray">
-            <Link href={"/buy"} className="">
-              Purchase
-            </Link>
+          <Button
+            onClick={() => {
+              router.prefetch("/buy"), router.push("/buy");
+            }}
+            className="w-full text-primary sm:w-auto bg-transparent border-1 border-borderGray"
+          >
+            Purchase
           </Button>
           <Button
             onClick={handleDownload}
