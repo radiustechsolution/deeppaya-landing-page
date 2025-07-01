@@ -110,9 +110,7 @@ export const AccordionComp = () => {
         </div>
       </div>
       <Link className="" href={"/contact"}>
-        <Button className="w-[70%] text-white sm:w-auto">
-          Contact us {"->"}
-        </Button>
+        <Button className="w-[70%] text-white sm:w-auto">Contact us</Button>
       </Link>
     </section>
   );
