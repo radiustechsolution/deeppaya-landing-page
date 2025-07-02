@@ -139,7 +139,7 @@ const SideNav = forwardRef<SideNavRef, SideNavProps>(
 
         {/* Side Navigation */}
         <div
-          className={`fixed top-0 flex flex-col md:hidden  left-0 z-50 h-screen w-80 bg-white dark:bg-gray-900 shadow-2xl transition-all duration-300 ease-out ${
+          className={`fixed top-0 flex flex-col md:hidden  left-0 z-50 h-svh w-80 bg-white dark:bg-gray-900 shadow-2xl transition-all duration-300 ease-out ${
             isOpen
               ? "translate-x-0 opacity-100"
               : "-translate-x-full opacity-95"
