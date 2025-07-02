@@ -26,8 +26,8 @@ export const siteConfig = {
       href: "/contact",
     },
     {
-      label: "Privacy & Policy",
-      href: "/privacy-policy",
+      label: "Agent Banking",
+      href: "/pos",
     },
   ],
   navMenuItems: [
