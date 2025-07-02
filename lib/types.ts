@@ -16,6 +16,11 @@ export interface CableProvider {
   img: string;
 }
 
+export interface SportProvider {
+  name: string;
+  code: string;
+}
+
 export interface CablePackage {
   PACKAGE_ID: string;
   PACKAGE_NAME: string;
@@ -47,6 +52,7 @@ export interface ApiResponse {
       }[];
     };
     cable_provider: CableProvider[];
+    sport: SportProvider[];
     cable: {
       TV_ID: {
         [key: string]: {

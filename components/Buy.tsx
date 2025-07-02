@@ -15,6 +15,7 @@ import {
   FiCreditCard,
 } from "react-icons/fi";
 import { FaNairaSign } from "react-icons/fa6";
+import { IoFootballOutline } from "react-icons/io5";
 import { TfiEmail } from "react-icons/tfi";
 import {
   Modal,
@@ -53,6 +54,7 @@ const Buy = () => {
     cableProvider: "",
     smartCardNumber: "",
     customerName: "",
+    customerID: "",
     meterNumber: "",
     discoCompany: "",
     discoCode: "",
@@ -119,12 +121,19 @@ const Buy = () => {
       hoverColor: "hover:bg-red-600",
     },
     {
-      id: "others",
-      name: "Others",
-      icon: FiMoreHorizontal,
-      color: "bg-gray-500",
-      hoverColor: "hover:bg-gray-600",
+      id: "sport",
+      name: "Sport",
+      icon: IoFootballOutline,
+      color: "bg-primary",
+      hoverColor: "hover:bg-blue-600",
     },
+    // {
+    //   id: "others",
+    //   name: "Others",
+    //   icon: FiMoreHorizontal,
+    //   color: "bg-gray-500",
+    //   hoverColor: "hover:bg-gray-600",
+    // },
   ];
 
   const handleInputChange = (
@@ -137,7 +146,7 @@ const Buy = () => {
       [e.target.name]: e.target.value,
     });
 
-    console.log(formData);
+    // console.log(formData);
   };
 
   const handleServiceClick = (serviceId: string) => {
@@ -155,6 +164,7 @@ const Buy = () => {
       meterNumber: "",
       discoCompany: "",
       discoCode: "",
+      customerID: "",
       studentId: "",
       institution: "",
       course: "",
@@ -557,6 +567,78 @@ const Buy = () => {
           </div>
         );
 
+      case "sport":
+        return (
+          <div className="space-y-6">
+            <div>
+              <p className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </p>
+              <div className="relative">
+                <TfiEmail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Your Email"
+                />
+              </div>
+            </div>
+            <div>
+              <p className="block text-sm font-medium text-gray-700 mb-2">
+                Customer ID
+              </p>
+              <div className="relative">
+                <FiPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input
+                  type="tel"
+                  name="customerID"
+                  value={formData.customerID}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter your ID"
+                />
+              </div>
+            </div>
+            <div>
+              <p className="block text-sm font-medium text-gray-700 mb-2">
+                Sport Company
+              </p>
+              <select
+                name="network"
+                value={formData.network}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">Select Company</option>
+                {servicesData.data.sport.map((provider) => (
+                  <option key={provider.code} value={provider.code}>
+                    {provider.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <p className="block text-sm font-medium text-gray-700 mb-2">
+                Amount
+              </p>
+              <div className="relative">
+                <FaNairaSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input
+                  type="number"
+                  name="amount"
+                  value={formData.amount}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter amount"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
       case "others":
         return (
           <div className="space-y-6">
@@ -717,6 +799,28 @@ const Buy = () => {
         }
         break;
 
+      case "sport":
+        if (!formData.customerID) {
+          errors.customerID = "Customr ID is required";
+          hasError = true;
+        }
+
+        if (!formData.network) {
+          errors.network = "Company is required";
+          hasError = true;
+        }
+
+        if (!formData.amount) {
+          errors.amount = "Amount is required";
+          hasError = true;
+        }
+
+        if (Number(formData.amount) < 100) {
+          errors.amount = "Amount cannot be less than ₦100";
+          hasError = true;
+        }
+        break;
+
       case "others":
         if (!formData.serviceType) {
           errors.serviceType = "Service type is required";
@@ -819,6 +923,12 @@ const Buy = () => {
           details["Amount"] = `₦${selectedExam.PRODUCT_AMOUNT}`;
         }
         break;
+
+      case "sport":
+        details["Customer ID"] = formData.customerID;
+        details["Company"] = formData.network;
+        details["Amount"] = `₦${formData.amount}`;
+        break;
       case "others":
         details["Service"] = formData.serviceType;
         details["Amount"] = `₦${formData.amount}`;
@@ -881,6 +991,14 @@ const Buy = () => {
               phone_number: formData.phoneNumber,
             };
             break;
+          case "sport":
+            payload = {
+              ...payload,
+              customer_id: formData.customerID,
+              company_code: formData.network,
+              amount: formData.amount,
+            };
+            break;
           case "others":
             payload = {
               ...payload,
@@ -903,7 +1021,9 @@ const Buy = () => {
                   ? "electricity"
                   : selectedService === "education"
                     ? "education"
-                    : "others";
+                    : selectedService === "sport"
+                      ? "sport"
+                      : "others";
 
         const response = await fetch(`/api/${url}/resolve`, {
           method: "POST",
