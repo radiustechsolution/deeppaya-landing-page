@@ -22,12 +22,12 @@ export const siteConfig = {
       href: "/pricing",
     },
     {
-      label: "Contact Us",
-      href: "/contact",
-    },
-    {
       label: "Agent Banking",
       href: "/pos",
+    },
+    {
+      label: "Contact Us",
+      href: "/contact",
     },
   ],
   navMenuItems: [

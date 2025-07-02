@@ -95,13 +95,34 @@ export default function POSAgentRegistration() {
       registrationData
     );
 
+    fetch("/api/agent-registration", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(registrationData),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to submit registration");
+        // Simulate form submission
+        setTimeout(() => {
+          setIsSubmitting(false);
+          setSubmitStatus("success");
+          setTimeout(() => setSubmitStatus(""), 8000);
+        }, 2000);
+      })
+      .catch((err) => {
+        setIsSubmitting(false);
+        setSubmitStatus("Submission failed. Please try again.");
+      });
+
     // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus("success");
-      // Clear success message after 8 seconds
-      setTimeout(() => setSubmitStatus(""), 8000);
-    }, 2000);
+    // setTimeout(() => {
+    //   setIsSubmitting(false);
+    //   setSubmitStatus("success");
+    //   // Clear success message after 8 seconds
+    //   setTimeout(() => setSubmitStatus(""), 8000);
+    // }, 2000);
   };
 
   const nextStep = () => {
