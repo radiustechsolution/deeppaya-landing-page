@@ -12,6 +12,8 @@ import { siteConfig } from "@/config/site";
 import { AccordionComp } from "@/components/accordion";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { FaChevronRight } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 // Custom hook for intersection observer
 const useInView = (threshold = 0.1) => {
@@ -39,6 +41,8 @@ const useInView = (threshold = 0.1) => {
 };
 
 export default function Home() {
+  const router = useRouter();
+
   const [featuresRef, featuresInView] = useInView(0.2);
   const [paymentsRef, paymentsInView] = useInView(0.2);
   const [analyticsRef, analyticsInView] = useInView(0.2);
@@ -104,7 +108,7 @@ export default function Home() {
           }`}
         >
           {/* Left side - Transaction list */}
-          <div className="w-full lg:w-1/2 space-y-4 bg-gray-100 p-6 rounded-lg animate-image-float hover:shadow-xl transition-shadow duration-300">
+          {/* <div className="w-full lg:w-1/2 space-y-4 bg-gray-100 p-6 rounded-lg animate-image-float hover:shadow-xl transition-shadow duration-300">
             {HomePagefeaturesObject.map((feature, index) => (
               <div
                 key={index}
@@ -138,6 +142,19 @@ export default function Home() {
                 />
               </div>
             ))}
+          </div> */}
+
+          <div className="w-full lg:w-1/2 space-y-4 bg-gray-100 p-6 rounded-lg animate-image-float hover:shadow-xl transition-shadow duration-300">
+            <div className="animate-image-float hover:scale-105 transition-transform duration-500">
+              <Image
+                src="/airtime.png"
+                alt="Become a POS agent"
+                width={500}
+                height={350}
+                className="rounded-lg shadow-lg object-cover hover:shadow-2xl transition-shadow duration-300"
+                priority
+              />
+            </div>
           </div>
 
           {/* Right side - Content */}
@@ -149,8 +166,10 @@ export default function Home() {
             }`}
           >
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 animate-text-reveal">
-                Enjoy Seamless Payments & Subscriptions
+              <h2 className="text-3xl md:text-[3rem] leading-[37px] sm:leading-[43px] md:leading-[60px] font-bold text-gray-900 mb-6 animate-text-reveal">
+                <span className="text-primary"> To Up your Airtime</span> on
+                Your Preffered Network{" "}
+                <span className="text-primary">on the Go.</span>
               </h2>
 
               <div className="space-y-4">
@@ -159,9 +178,9 @@ export default function Home() {
                     className="text-primary animate-check-mark hover:scale-125 transition-transform duration-300"
                     size={24}
                   />
-                  <p className="text-gray-600 text-md animate-text-reveal-delayed">
-                    No more sticky price tags. No more balance due emails. No
-                    more carrying around multiple credit cards.
+                  <p className="text-gray-600 text-lg animate-text-reveal-delayed">
+                    Instantly recharge your airtime on any network, anytime,
+                    anywhere—no hassle, no delays.
                   </p>
                 </div>
 
@@ -170,27 +189,33 @@ export default function Home() {
                     className="text-primary animate-check-mark hover:scale-125 transition-transform duration-300"
                     size={24}
                   />
-                  <p className="text-gray-600 text-md animate-text-reveal-delayed">
-                    Wally allows you to skip the line, pay whenever and wherever
-                    you&apos;re ready, and leave your wallet at home.
+                  <p className="text-gray-600 text-lg animate-text-reveal-delayed">
+                    Enjoy secure, fast, and convenient airtime top-ups—no need
+                    to visit a store or scratch cards.
                   </p>
                 </div>
               </div>
             </div>
 
             <Link
-              href={"/learn-more"}
+              href={"/buy"}
               className="w-[70%] hidden md:flex sm:w-auto animate-button-float"
             >
               <Button className="text-white hover:scale-105 hover:shadow-lg transition-all duration-300">
-                Learn more
+                <div className="flex items-center gap-3">
+                  <p>Get Started</p>
+                  <FaChevronRight />
+                </div>
               </Button>
             </Link>
           </div>
           <div>
-            <Link href={"/learn-more"} className="w-[70%] md:hidden sm:w-auto">
+            <Link href={"/buy"} className="w-[70%] md:hidden sm:w-auto">
               <Button className="text-white hover:scale-105 hover:shadow-lg transition-all duration-300">
-                Learn more
+                <div className="flex items-center gap-3">
+                  <p>Get Started</p>
+                  <FaChevronRight />
+                </div>
               </Button>
             </Link>
           </div>
@@ -218,29 +243,39 @@ export default function Home() {
             }`}
           >
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 animate-text-reveal">
-                Detailed history to analyze your spending
+              <h2 className="text-3xl md:text-[3rem] font-bold text-gray-900 leading-[37px] sm:leading-[43px] md:leading-[60px] mb-6 animate-text-reveal">
+                Celebrate <span className="text-primary">Every Goal -</span>
+                Fund <span className="text-primary">your sport wallet</span>
               </h2>
 
               <div className="space-y-4">
-                <p className="text-gray-600 text-md max-w-lg animate-text-reveal-delayed">
-                  Our detailed transaction history provides insights into where
-                  your money goes, helping you make informed decisions.
+                <p className="text-gray-600 text-lg max-w-lg animate-text-reveal-delayed">
+                  Are you a football lover? Top up your Sports Wallet and enjoy
+                  the thrill of live betting, match streaming, and{" "}
+                  <span className="text-primary">fans rewards.</span>
                 </p>
               </div>
             </div>
 
-            <Button className="w-full text-white hidden md:flex sm:w-auto animate-button-float hover:scale-105 hover:shadow-lg transition-all duration-300">
-              Learn more
+            <Button
+              onClick={() => {
+                router.prefetch("/buy"), router.push("/buy");
+              }}
+              className="w-full text-white hidden md:flex sm:w-auto animate-button-float hover:scale-105 hover:shadow-lg transition-all duration-300"
+            >
+              <div className="flex items-center gap-3">
+                <p>Get Started</p>
+                <FaChevronRight />
+              </div>
             </Button>
           </div>
 
           {/* Right side - Image */}
-          <div className="w-full lg:w-1/2 flex justify-center">
+          <div className="w-full lg:w-1/2 space-y-4 bg-gray-100 p-6 rounded-lg animate-image-float hover:shadow-xl transition-shadow duration-300">
             <div className="animate-image-float hover:scale-105 transition-transform duration-500">
               <Image
-                src="/transfer-history.jpeg"
-                alt="Transaction history"
+                src="/sport.png"
+                alt="Become a POS agent"
                 width={500}
                 height={350}
                 className="rounded-lg shadow-lg object-cover hover:shadow-2xl transition-shadow duration-300"
@@ -248,8 +283,16 @@ export default function Home() {
               />
             </div>
           </div>
-          <Button className="w-[70%] text-white md:hidden sm:w-auto hover:scale-105 hover:shadow-lg transition-all duration-300">
-            Learn more
+          <Button
+            onClick={() => {
+              router.prefetch("/buy"), router.push("/buy");
+            }}
+            className="w-[70%] text-white md:hidden sm:w-auto hover:scale-105 hover:shadow-lg transition-all duration-300"
+          >
+            <div className="flex items-center gap-3">
+              <p>Get Started</p>
+              <FaChevronRight />
+            </div>
           </Button>
         </div>
       </section>
@@ -287,7 +330,7 @@ export default function Home() {
           <div className="w-full lg:w-1/2 space-y-4 bg-gray-100 p-6 rounded-lg animate-image-float hover:shadow-xl transition-shadow duration-300">
             <div className="animate-image-float hover:scale-105 transition-transform duration-500">
               <Image
-                src="/airtime.png"
+                src="/pos-agent.jpeg"
                 alt="Become a POS agent"
                 width={500}
                 height={350}
@@ -306,7 +349,7 @@ export default function Home() {
             }`}
           >
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 animate-text-reveal">
+              <h2 className="text-3xl md:text-[3rem] leading-[37px] sm:leading-[43px] md:leading-[60px] font-bold text-gray-900 mb-6 animate-text-reveal">
                 Do you want to be a {siteConfig.name} POS agent?
               </h2>
 
@@ -316,7 +359,7 @@ export default function Home() {
                     className="text-primary animate-check-mark hover:scale-125 transition-transform duration-300"
                     size={24}
                   />
-                  <p className="text-gray-600 text-md animate-text-reveal-delayed">
+                  <p className="text-gray-600 text-lg animate-text-reveal-delayed">
                     Earn extra income by providing seamless payment solutions to
                     your community as a certified Paya POS agent.
                   </p>
@@ -327,7 +370,7 @@ export default function Home() {
                     className="text-primary animate-check-mark hover:scale-125 transition-transform duration-300"
                     size={24}
                   />
-                  <p className="text-gray-600 text-md animate-text-reveal-delayed">
+                  <p className="text-gray-600 text-lg animate-text-reveal-delayed">
                     Enjoy fast settlements, reliable support, and access to a
                     wide range of financial services for your customers.
                   </p>
@@ -340,14 +383,20 @@ export default function Home() {
               className="w-[70%] hidden md:flex sm:w-auto animate-button-float"
             >
               <Button className="text-white hover:scale-105 hover:shadow-lg transition-all duration-300">
-                Register here
+                <div className="flex items-center gap-3">
+                  <p>Register here</p>
+                  <FaChevronRight />
+                </div>
               </Button>
             </Link>
           </div>
           <div>
             <Link href={"/pos"} className="w-[70%] md:hidden sm:w-auto">
               <Button className="text-white hover:scale-105 hover:shadow-lg transition-all duration-300">
-                Register here
+                <div className="flex items-center gap-3">
+                  <p>Register here</p>
+                  <FaChevronRight />
+                </div>
               </Button>
             </Link>
           </div>
@@ -389,22 +438,28 @@ export default function Home() {
             }`}
           >
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 animate-text-reveal">
-                Want to own your own VTU business with {siteConfig.name}?
+              <h2 className="text-3xl md:text-[3rem] leading-[37px] sm:leading-[43px] md:leading-[60px] font-bold text-gray-900 mb-6 animate-text-reveal">
+                <span className="text-primary">Power your business</span> with{" "}
+                {siteConfig.name} APIs.
               </h2>
 
               <div className="space-y-4">
-                <p className="text-gray-600 text-md max-w-lg animate-text-reveal-delayed">
-                  Are you looking to start your own VTU business or need a
-                  reliable VTU API? {siteConfig.name} provides seamless VTU APIs
-                  and solutions to help you launch, manage, and grow your
-                  virtual top-up business with ease.
+                <p className="text-gray-600 text-lg max-w-lg animate-text-reveal-delayed">
+                  Want to start a VTU business or need a reliable VTU API?{" "}
+                  {siteConfig.name} offers seamless solutions to launch and grow
+                  your VTU services effortlessly.
                 </p>
               </div>
             </div>
 
-            <Button className="w-full text-white hidden md:flex sm:w-auto animate-button-float hover:scale-105 hover:shadow-lg transition-all duration-300">
-              Learn more
+            <Button
+              onClick={() => router.push(siteConfig.developerApi)}
+              className="w-full text-white hidden md:flex sm:w-auto animate-button-float hover:scale-105 hover:shadow-lg transition-all duration-300"
+            >
+              <div className="flex items-center gap-3">
+                <p>Developer API</p>
+                <FaChevronRight />
+              </div>
             </Button>
           </div>
 
@@ -421,8 +476,14 @@ export default function Home() {
               />
             </div>
           </div>
-          <Button className="w-[70%] text-white md:hidden sm:w-auto hover:scale-105 hover:shadow-lg transition-all duration-300">
-            Learn more
+          <Button
+            onClick={() => router.push(siteConfig.developerApi)}
+            className="w-[70%] text-white md:hidden sm:w-auto hover:scale-105 hover:shadow-lg transition-all duration-300"
+          >
+            <div className="flex items-center gap-3">
+              <p>Developer API</p>
+              <FaChevronRight />
+            </div>
           </Button>
         </div>
       </section>

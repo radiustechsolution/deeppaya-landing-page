@@ -6,6 +6,7 @@ export const siteConfig = {
   baseUrl: "https://deeppaya.com",
   officeAdress: "143 Aka Etinan Road, uyo, Uyo, Akwa Ibom, Nigeria",
   adminPhone: "+234 814 131 4105",
+  developerApi: "https://documenter.getpostman.com/view/46373164/2sB34Zs5Le",
   navItems: [
     // {
     //   label: "Home",
@@ -69,6 +70,7 @@ export const siteConfig = {
     discord: "https://discord.gg/9b6yyZKmH4",
     sponsor: "https://patreon.com/jrgarciadev",
   },
+
   siteColors: {
     primary: "#8059fa",
     dark: "#11172b",

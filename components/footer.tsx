@@ -23,7 +23,7 @@ const Footer = () => {
     }
     // Fallback for other devices
     else {
-      window.location.href = "https://yourwebsite.com/download"; // or show both options
+      // window.location.href = "https://yourwebsite.com/download"; // or show both options
     }
   };
 

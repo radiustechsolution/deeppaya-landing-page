@@ -4,6 +4,7 @@ import { IoMdAdd } from "react-icons/io";
 import Button from "./button";
 import { Accordion, AccordionItem } from "@heroui/react";
 import Link from "next/link";
+import { FaChevronRight } from "react-icons/fa6";
 
 export const AccordionComp = () => {
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([""]));
@@ -110,7 +111,12 @@ export const AccordionComp = () => {
         </div>
       </div>
       <Link className="w-full flex flex-col items-center" href={"/contact"}>
-        <Button className="w-[70%] text-white sm:w-auto">Contact us</Button>
+        <Button className="w-[70%] text-white sm:w-auto">
+          <div className="flex items-center gap-3">
+            <p>Contact us</p>
+            <FaChevronRight />
+          </div>
+        </Button>
       </Link>
     </section>
   );
