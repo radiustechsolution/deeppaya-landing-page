@@ -95,7 +95,7 @@ const SideNav = forwardRef<SideNavRef>((props, ref) => {
       href: "/pos",
       subItems: [
         { label: "Own Your POS", href: "/pos" },
-        { label: "VTU Proper", href: "/vtu-proper" },
+        { label: "Developer API", href: siteConfig.developerApi },
       ],
     },
     // {
