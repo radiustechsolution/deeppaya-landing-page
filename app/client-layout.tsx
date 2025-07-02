@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import clsx from "clsx";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
@@ -14,6 +14,20 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const sideNavRef = useRef<SideNavRef>(null);
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  // Prevent body scrolling when sidenav is open
+  useEffect(() => {
+    if (isNavOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isNavOpen]);
 
   return (
     <html suppressHydrationWarning lang="en" className="scroll-smooth">
@@ -26,9 +40,9 @@ export default function ClientLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <div className="relative flex flex-col h-svh">
-            <Navbar sideNavRef={sideNavRef} />
+            <Navbar sideNavRef={sideNavRef} onNavToggle={setIsNavOpen} />
             <main className="flex-1">{children}</main>
-            <SideNav ref={sideNavRef} />
+            <SideNav ref={sideNavRef} onStateChange={setIsNavOpen} />
             <Footer />
           </div>
         </Providers>

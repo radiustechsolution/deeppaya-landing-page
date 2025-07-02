@@ -7,12 +7,17 @@ import { FiMenu } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import { isIOS, isAndroid } from "react-device-detect";
 import { SideNavRef } from "./sidenav";
-
-export const Navbar = ({
-  sideNavRef,
-}: {
+interface NavbarProps {
   sideNavRef: React.RefObject<SideNavRef>;
-}) => {
+  onNavToggle?: (isOpen: boolean) => void;
+}
+
+export const Navbar = ({ sideNavRef, onNavToggle }: NavbarProps) => {
+  // When you trigger the sidenav, call onNavToggle
+  const handleOpenNav = () => {
+    sideNavRef.current?.openNav();
+    onNavToggle?.(true);
+  };
   const pathName = usePathname();
 
   const handleDownload = () => {
