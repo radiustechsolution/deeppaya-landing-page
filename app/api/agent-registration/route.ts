@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { meter_number, amount, email, company_code } = body;
+    // const { meter_number, amount, email, company_code } = body;
 
     const response = await fetch(`${siteConfig.appapiUrl}/agent/request`, {
       method: "POST",
@@ -14,10 +14,7 @@ export async function POST(request: Request) {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        meter_number,
-        amount,
-        email,
-        company_code,
+        body,
       }),
     });
 

@@ -167,7 +167,7 @@ export default function Home() {
           >
             <div>
               <h2 className="text-3xl md:text-[3rem] leading-[37px] sm:leading-[43px] md:leading-[60px] font-bold text-gray-900 mb-6 animate-text-reveal">
-                <span className="text-primary"> To Up your Airtime</span> on
+                <span className="text-primary"> Top Up your Airtime</span> on
                 Your Preffered Network{" "}
                 <span className="text-primary">on the Go.</span>
               </h2>
